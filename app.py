@@ -19,7 +19,7 @@ def index():
     except redis.exceptions.ConnectionError:
         return "Erreur : impossible de joindre Redis (db-service).", 503
     container_id = socket.gethostname()  # = ID court du conteneur
-    return f"Bonjour ! Cette page a été vue {hits} fois. Je suis le conteneur {container_id}\n"
+    return f"Bonjour ! Cette page a été vue {hits} fois. Je suis le conteneur {container_id}\n test déclenchement auto "
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
