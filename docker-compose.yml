@@ -1,0 +1,30 @@
+services:
+  web:
+    build: .
+    image: counter-app:1.0
+    environment:
+      - REDIS_HOST=db-service
+      - REDIS_PORT=6379
+    ports:
+      - "${WEB_PORT}-8090:${APP_PORT}"    # plage : 8080-8090 -> 5000
+    networks:
+      - app-network
+    depends_on:
+      - db-service
+    restart: unless-stopped
+
+  db-service:
+    image: redis:${REDIS_VERSION}
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis-data:
